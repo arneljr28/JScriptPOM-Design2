@@ -26,10 +26,6 @@ module.exports = {
                     .maximize();
     },
 
-    /**
-     * 
-     * @param {*} objToClick 
-     */
     click : async (objLocator) => {
         await driver.sleep(500);
         try {
@@ -41,17 +37,23 @@ module.exports = {
         }
     },
 
-    /**
-     * 
-     * @param {*} fieldToFill 
-     * @param {*} text 
-     */
     setText : async (objLocator, text) => {
         await driver.sleep(500);
         try {
-
             const input = await driver.findElement(By.id(objLocator));
             await input.sendKeys(text);
+        }
+        catch(error) {
+            console.log(error);
+        }
+    },
+
+    getAttribute : async (objLocator, attributeName) => {
+        await driver.sleep(500);
+        try{
+            const getValue = await driver.findElement(By.id(objLocator));
+            return getValue.getAttribute(attributeName);
+
         }
         catch(error) {
             console.log(error);
@@ -76,6 +78,4 @@ initialize = async () => {
 
     driver = edge.Driver.createSession(options, service);
     await driver.manage().setTimeouts({ implicit : 60000 });
-
-    // return driver;
 }
